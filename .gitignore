@@ -1,0 +1,23 @@
+# Environnement
+.env
+.env.prod
+.pass
+
+# Dépendances
+**/node_modules/
+**/venv/
+
+# Fichiers compilés
+**/__pycache__/
+*.pyc
+
+# IDEs
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
