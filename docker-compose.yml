@@ -1,27 +1,25 @@
 services:
   backend:
     build:
-      #context: .
-      context: ./promanage-backend
-      #dockerfile: ./promanage-backend/Dockerfile
+      context: ./backend
       dockerfile: Dockerfile
     env_file: .env
     ports:
       - "8000:8000"
     volumes:
-      - ./promanage-backend:/app
+      - ./backend:/app
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       - promanage-db
   
   frontend:
     build:
-      context: ./promanage-frontend
+      context: ./web
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - ./promanage-frontend:/app
+      - ./web:/app
     command: npm start
 
   promanage-db:
