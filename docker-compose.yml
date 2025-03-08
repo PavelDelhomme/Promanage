@@ -1,10 +1,10 @@
 services:
   backend:
     build:
-      #context: .
-      context: ./promanage-backend
-      #dockerfile: ./promanage-backend/Dockerfile
-      dockerfile: Dockerfile
+      context: .
+      #context: ./promanage-backend
+      dockerfile: ./promanage-backend/Dockerfile
+      #dockerfile: Dockerfile
     env_file: .env
     ports:
       - "8000:8000"
