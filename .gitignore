@@ -1,22 +1,18 @@
 # Environnement
 .env
-.env.prod
-.pass
+.env.secrets
 
-# Dépendances
-**/node_modules/
-**/venv/
-
-# Fichiers compilés
-**/__pycache__/
+# Python
+__pycache__/
 *.pyc
+venv/
 
 # IDEs
-.idea/
 .vscode/
+.idea/
 
 # Logs
-*.log
+.log
 
 # OS generated files
 .DS_Store
