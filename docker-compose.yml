@@ -1,22 +1,32 @@
 services:
   promanage-backend:
-    build: ./promanage-backend
+    container_name: promanage-backend
+    build: 
+      context: ./promanage-backend
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=promanage-db
+      - DB_PORT=5432
+      - PYTHONPATH="/app"
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@promanage-db:5432/${DB_NAME}
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      
     env_file:
       - .env
-      - .env.secrets
+      
     depends_on:
       promanage-db:
         condition: service_healthy
-    command: >
-      sh -c "alembic upgrade head &&
-      uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    command: /app/entrypoint.sh
       
   promanage-db:
+    container_name: promanage-db
     image: postgres:13
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -31,4 +41,3 @@ services:
 
 volumes:
   db_data:
-  migrations_data: # Pour persister les migrations
