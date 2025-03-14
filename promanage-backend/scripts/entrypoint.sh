@@ -15,7 +15,7 @@ fi
 
 # Créer le superutilisateur
 echo "Creating superuser..."
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$ADMIN_USERNAME', '', '$ADMIN_INIT_PASSWORD') if not User.objects.exists() else None" | python manage.py shell
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$ADMIN_USERNAME', '', '$ADMIN_INIT_PASSWORD') if not User.objects.exists() else print('Superuser déjà créé')" | python manage.py shell
 
 # Démarrer le serveur
 exec python manage.py runserver 0.0.0.0:8000
