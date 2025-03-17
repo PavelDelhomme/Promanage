@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="project-header">
+  <h1>{{ project.title }}</h1>
+  <div class="project-meta">
+    <span class="category">{{ project.get_category_display }}</span>
+    <span class="dates">{{ project.start_date }} - {% if project.end_date %}{{ project.end_date }}{% else %}En cours{% endif %}</span>
+  </div>
+</div>
+
+<div class="project-content">
+  <h2>Description</h2>
+  <p>{{ project.description }}</p>
+
+  <div class="project-sections">
+    <section class="tasks">
+      <h3>Tâches ({{ project.tasks.count }})</h3>
+      {% for task in project.tasks.all %}
+      <div class="task-item">
+        <span class="task-status {{ task.status|lower }}"></span>
+        {{ task.title }} - Échéance: {{ task.due_date|date:"d/m/Y" }}
+      </div>
+      {% endfor %}
+    </section>
+
+    <section class="bugs">
+      <h3>Bugs ({{ project.bugs.count }})</h3>
+      {% for bug in project.bugs.all %}
+      <div class="bug-item priority-{{ bug.priority|lower }}">
+        [{{ bug.get_priority_display }}] {{ bug.title }}
+      </div>
+      {% endfor %}
+    </section>
+  </div>
+</div>
+{% endblock %}

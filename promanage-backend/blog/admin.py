@@ -3,5 +3,6 @@ from .models import BlogPost
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'project', 'is_published', 'linkedin_shared')
-    raw_id_fields = ('project',)
+    list_display = ('title', 'author', 'created_at', 'is_public', 'project')
+    list_filter = ('is_public', 'author', 'project')
+    search_fields = ('title', 'content')

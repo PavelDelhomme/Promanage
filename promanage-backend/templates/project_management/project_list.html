@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Mes Projets</h1>
+<a href="{% url 'project_create' %}">+ Nouveau Projet</a>
+
+<div class="project-grid">
+  {% for project in projects %}
+  <div class="project-card">
+    <h2>{{ project.title }}</h2>
+    <p class="status {{ project.status|lower }}">{{ project.get_status_display }}</p>
+    <p>{{ project.description|truncatechars:100 }}</p>
+    <div class="project-actions">
+      <a href="{% url 'project_detail' project.id %}" class="btn">Voir</a>
+      <a href="{% url 'project_update' project.id %}" class="btn">Modifier</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
