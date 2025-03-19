@@ -1,6 +1,11 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import BlogPost
+from .forms import BlogPostForm
+from django.conf import settings
+from django.http import JsonResponse
+import requests
+from django.urls import reverse_lazy
 
 class BlogPostListView(ListView):
     model = BlogPost
@@ -38,8 +43,3 @@ class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
     model = BlogPost
     template_name = 'blog/blogpost_confirm_delete.html'
     success_url = reverse_lazy('blogpost_list')
-
-def share_on_linkedin(request, pk):
-    post = BlogPost.objects.get(pk=pk)
-    # Logique pour partager sur LinkedIn (à implémenter)
-    return redirect('blogpost_detail', pk=pk)

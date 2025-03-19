@@ -1,6 +1,8 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from .models import Project, Task, Bug
+from .forms import ProjectForm, TaskForm, BugForm
 
 class ProjectListView(ListView):
     model = Project
@@ -13,22 +15,18 @@ class ProjectDetailView(DetailView):
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
+    form_class = ProjectForm
     template_name = 'project_management/project_form.html'
-    fields = ['title', 'description', 'category', 'start_date', 'end_date', 'is_public']
-
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
 
 class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     model = Project
+    form_class = ProjectForm
     template_name = 'project_management/project_form.html'
-    fields = ['title', 'description', 'category', 'status', 'start_date', 'end_date', 'is_public']
 
 class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     model = Project
     template_name = 'project_management/project_confirm_delete.html'
-    success_url = '/projects/'
+    success_url = reverse_lazy('project_list')
 
 
 class TaskListView(ListView):
@@ -42,22 +40,18 @@ class TaskDetailView(DetailView):
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
+    form_class = TaskForm
     template_name = 'project_management/task_form.html'
-    fields = ['title', 'description', 'status', 'due_date']
-
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
+    form_class = TaskForm
     template_name = 'project_management/task_form.html'
-    fields = ['title', 'description', 'status', 'due_date']
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     template_name = 'project_management/task_confirm_delete.html'
-    success_url = 'projects/'
+    success_url = reverse_lazy('task_list')
 
 class BugListView(ListView):
     model = Bug
@@ -68,21 +62,18 @@ class BugDetailView(DetailView):
     model = Bug
     template_name = 'project_management/bug_detail.html'
 
+
 class BugCreateView(LoginRequiredMixin, CreateView):
     model = Bug
+    form_class = BugForm
     template_name = 'project_management/bug_form.html'
-    fields = ['title', 'description', 'status', 'priority']
-
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)*
 
 class BugUpdateView(LoginRequiredMixin, UpdateView):
     model = Bug
+    form_class = BugForm
     template_name = 'project_management/bug_form.html'
-    fields = ['title', 'description', 'status', 'priority']
 
 class BugDeleteView(LoginRequiredMixin, UpdateView):
     model = Bug
     template_name = 'project_management/bug_confirm_delete.html'
-    success_url = 'projects/'
+    success_url = reverse_lazy('project_list')

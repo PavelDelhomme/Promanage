@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="blog-header">
+    <h1>Articles de Blog</h1>
+    <a href="{% url 'blogpost_create' %}" class="btn btn-new">+ Nouvel Article</a>
+</div>
+
+<div class="blog-list">
+    {% for post in blog_posts %}
+    <article class="blog-card">
+        {% if post.cover_image %}
+        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="cover-image">
+        {% endif %}
+        
+        <div class="blog-content">
+            <h2><a href="{% url 'blogpost_detail' post.pk %}">{{ post.title }}</a></h2>
+            <div class="meta-info">
+                <span class="author">Par {{ post.author.username }}</span>
+                <span class="date">{{ post.created_at|date:"d F Y" }}</span>
+                {% if post.project %}
+                <span class="project">Projet: {{ post.project.title }}</span>
+                {% endif %}
+            </div>
+            <div class="excerpt">
+                {{ post.content|truncatewords:30 }}
+            </div>
+            <div class="article-actions">
+                <a href="{% url 'blogpost_update' post.pk %}" class="btn btn-edit">Modifier</a>
+                <a href="{% url 'blogpost_delete' post.pk %}" class="btn btn-delete">Supprimer</a>
+            </div>
+        </div>
+    </article>
+    {% empty %}
+    <p>Aucun article disponible.</p>
+    {% endfor %}
+</div>
+{% endblock %}

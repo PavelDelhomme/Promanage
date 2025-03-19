@@ -1,0 +1,11 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<h1>Confirmer la suppression</h1>
+<p>Êtes-vous sûr de vouloir supprimer la tâche "{{ object.title }}" ?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+  <a href="{% url 'task_detail' object.id %}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}

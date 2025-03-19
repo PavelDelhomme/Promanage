@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<article class="blog-post">
+  <header>
+    <h1>{{ object.title }}</h1>
+    <div class="post-meta">
+      <span class="author">Par {{ object.author.username }}</span>
+      <span class="date">{{ object.created_at|date:"d F Y" }}</span>
+      {% if object.project %}
+      <span class="project">Projet lié: {{ object.project.title }}</span>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="post-content">
+    {{ object.content|linebreaks }}
+  </div>
+
+  <div class="post-actions">
+    {% if object.is_public %}
+    <a href="#" class="btn share-linkedin">Partager sur LinkedIn</a>
+    {% endif %}
+    <a href="{% url 'blogpost_update' object.id %}" class="btn">Modifier</a>
+  </div>
+</article>
+{% endblock %}

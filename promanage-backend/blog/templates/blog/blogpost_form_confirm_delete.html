@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="delete-confirm">
+    <h2>Confirmer la suppression</h2>
+    <p>Êtes-vous sûr de vouloir supprimer "{{ object }}"?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirmer</button>
+        <a href="{% url 'blogpost_detail' object.pk %}" class="btn">Annuler</a>
+    </form>
+</div>
+{% endblock %}

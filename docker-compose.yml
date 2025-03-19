@@ -22,7 +22,12 @@ services:
     depends_on:
       promanage-db:
         condition: service_healthy
-    command: /app/entrypoint.sh
+    command: sh -c "/app/scripts/entrypoint.sh && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./promanage-backend:/app
+      - ./promanage-backend/templates:/app/templates
+      - ./promanage-backend/base:/app/base
+      - ./promanage-backend/static:/app/static
       
   promanage-db:
     container_name: promanage-db

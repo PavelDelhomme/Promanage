@@ -1,0 +1,61 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<h1>Gestion des Tâches</h1>
+<div class="task-controls">
+  <a href="{% url 'task_create' %}" class="btn btn-primary">Nouvelle Tâche</a>
+  <button id="toggle-view" class="btn btn-secondary">Basculer vue Gantt</button>
+</div>
+
+<div id="kanban-view" class="task-board">
+  <div class="task-column todo">
+    <h2>À faire</h2>
+    {% for task in tasks %}
+      {% if task.status == 'TODO' %}
+        {% include "tasks/_task_card.html" %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="task-column in-progress">
+    <h2>En cours</h2>
+    {% for task in tasks %}
+      {% if task.status == 'IN_PROGRESS' %}
+        {% include "tasks/_task_card.html" %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="task-column done">
+    <h2>Terminé</h2>
+    {% for task in tasks %}
+      {% if task.status == 'DONE' %}
+        {% include "tasks/_task_card.html" %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<div id="gantt-view" class="gantt-chart" style="display: none;">
+  <!-- Ici, nous intégrerons le diagramme de Gantt -->
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.getElementById('toggle-view').addEventListener('click', function() {
+    var kanbanView = document.getElementById('kanban-view');
+    var ganttView = document.getElementById('gantt-view');
+    if (kanbanView.style.display !== 'none') {
+      kanbanView.style.display = 'none';
+      ganttView.style.display = 'block';
+      this.textContent = 'Basculer vue Kanban';
+    } else {
+      kanbanView.style.display = 'flex';
+      ganttView.style.display = 'none';
+      this.textContent = 'Basculer vue Gantt';
+    }
+  });
+</script>
+{% endblock %}

@@ -7,5 +7,4 @@ urlpatterns = [
     path('new/', views.BlogPostCreateView.as_view(), name='blogpost_create'),
     path('<int:pk>/edit/', views.BlogPostUpdateView.as_view(), name='blogpost_update'),
     path('<int:pk>/delete/', views.BlogPostDeleteView.as_view(), name='blogpost_delete'),
-    path('<int:pk>/share/', views.share_on_linkedin, name='blogpost_share'),
 ]

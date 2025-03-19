@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Bienvenue sur ProManage</h1>
+<p>Gérez vos projets, tâches, CV et blog en un seul endroit.</p>
+<div class="home-links">
+    <a href="{% url 'project_list' %}" class="btn">Projets</a>
+    <a href="{% url 'task_list' %}" class="btn">Tâches</a>
+    <a href="{% url 'blogpost_list' %}" class="btn">Blog</a>
+    <a href="{% url 'cventry_list' %}" class="btn">CV</a>
+</div>
+
+<h2>Articles récents</h2>
+<div class="recent-posts">
+    {% for post in recent_posts %}
+    <article class="blog-card">
+        <h3><a href="{% url 'blogpost_detail' post.pk %}">{{ post.title }}</a></h3>
+        <p>{{ post.content|truncatewords:30 }}</p>
+    </article>
+    {% empty %}
+    <p>Aucun article récent.</p>
+    {% endfor %}
+</div>
+{% endblock %}
