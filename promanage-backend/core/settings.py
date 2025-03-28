@@ -129,6 +129,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Fichiers média
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+# Créer le dossier media/cvs s'il n'existe pas
+MEDIA_CVS = BASE_DIR / 'media' / 'cvs'
+if not MEDIA_CVS.exists():
+    MEDIA_CVS.mkdir(parents=True, exist_ok=True)
 
 
 # Configuration CKEditor

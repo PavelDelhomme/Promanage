@@ -1,29 +1,42 @@
 <!-- templates/navigation.html -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="{% url 'home' %}">ProManage</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'home' %}">Accueil</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'project_list' %}">Projets</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'blogpost_list' %}">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'cventry_list' %}">CV</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'task_list' %}">Tâches</a>
-          </li>
-        </ul>
-      </div>
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">ProManage</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'project_list' %}">Projets</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blogpost_list' %}">Blog</a>
+        </li>
+        <!-- navigation.html -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cv_list' %}">Mes CV</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'task_list' %}">Tâches</a>
+        </li>
+        {% endif %}
+      </ul>
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin:login' %}">Se connecter</a>
+        </li>
+        {% endif %}
+      </ul>
     </div>
-  </nav>
-  
+  </div>
+</nav>

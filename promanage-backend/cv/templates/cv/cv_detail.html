@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<div class="cv-container">
+    <h1>{{ object.title }}</h1>
+    
+    {% if user == object.user %}
+    <div class="cv-actions mb-4">
+        <a href="{% url 'cventry_create' object.id %}" class="btn btn-primary">+ Ajouter une entrée</a>
+        <a href="#" class="btn btn-success">Générer PDF</a>
+    </div>
+    {% endif %}
+
+    {% regroup object.entries.all by get_entry_type_display as sections %}
+    
+    {% for section in sections %}
+    <section class="cv-section mb-5">
+        <h2 class="section-title">{{ section.grouper }}</h2>
+        
+        {% for entry in section.list %}
+        <div class="cv-entry card mb-3">
+            <div class="card-body">
+                <div class="entry-header">
+                    <h3 class="card-title">{{ entry.title }}</h3>
+                    {% if entry.start_date %}
+                    <div class="entry-dates text-muted">
+                        {{ entry.start_date|date:"M Y" }} - 
+                        {{ entry.end_date|date:"M Y"|default:"Actuel" }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="entry-content">
+                    <p class="card-text">{{ entry.description|linebreaks }}</p>
+                </div>
+                {% if user == object.user %}
+                <div class="entry-actions mt-3">
+                    <a href="{% url 'cventry_update' entry.id %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    {% endfor %}
+</div>
+{% endblock %}

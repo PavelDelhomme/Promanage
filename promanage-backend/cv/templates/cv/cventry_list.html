@@ -1,0 +1,37 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+<h1>Mon CV</h1>
+{% if user.is_authenticated %}
+<a href="{% url 'cventry_create' %}" class="btn btn-primary">+ Ajouter une entrée</a>
+{% endif %}
+
+<div class="cv-sections">
+  {% regroup cv_entries by get_entry_type_display as entries_by_type %}
+  
+  {% for entry_type in entries_by_type %}
+  <section class="cv-section">
+    <h2>{{ entry_type.grouper }}</h2>
+    
+    {% for entry in entry_type.list %}
+    <div class="cv-item">
+      <h3>{{ entry.title }}</h3>
+      {% if entry.start_date %}
+      <div class="cv-dates">
+        {{ entry.start_date|date:"M Y" }} - 
+        {% if entry.end_date %}{{ entry.end_date|date:"M Y" }}{% else %}Actuel{% endif %}
+      </div>
+      {% endif %}
+      <p>{{ entry.description|linebreaks }}</p>
+      {% if user.is_authenticated %}
+      <div class="cv-actions">
+        <a href="{% url 'cventry_update' entry.id %}" class="btn btn-sm btn-secondary">Modifier</a>
+        <a href="{% url 'cventry_delete' entry.id %}" class="btn btn-sm btn-danger">Supprimer</a>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

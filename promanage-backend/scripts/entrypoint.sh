@@ -30,14 +30,14 @@ ls -l /app/templates
 
 # Créer le superutilisateur SEULEMENT si la table existe
 echo "Checking for superuser..."
-if [ "$(python manage.py shell -c 'from django.contrib.auth import get_user_model; print(get_user_model().objects.exists())')" = "False" ]; then
+if ["$(python manage.py shell -c 'from django.contrib.auth import get_user_model; print(get_user_model().objects.exists())' = "False" ]; then
     echo "Creating superuser..."
-    python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$ADMIN_USERNAME', '', '$ADMIN_INIT_PASSWORD')"
+    python manage.py shell -c from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$ADMIN_USERNAME', '', '$ADMIN_INIT_PASSWORD')
 else
     echo "Superuser already exists"
 fi
 
-# Démarrer le serveur
-#exec python manage.py runserver 0.0.0.0:8000
+# Démarrage du serveur
+#exec python manage.py runserver 0.0.0:8000
 
 exec "$@"
